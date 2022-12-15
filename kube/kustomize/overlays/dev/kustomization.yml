@@ -3,12 +3,12 @@ bases:
 
 images:
   - name: app-image
-    newName: ${containerImageUri}
+    newName: <+artifact.image>
 
-namespace: ${namespace}
+namespace: <+infra.namespace>
 
 configMapGenerator:
-  - name: ${app-label}-runtime
+  - name: <+pipeline.stages.DeployDEV.variables.app_label>-runtime
     literals:
       - SPRING_PROFILES_ACTIVE=aws-dev, fake-auth, cloud
-      - APP_FLAGS=-Dsun.net.http.allowRestrictedHeaders=true  -Djdk.tls.allowUnsafeServerCertChange=true -Dsun.security.ssl.allowUnsafeRenegotiation=true -Dserver.servlet.context-path=${context-path}
+      - APP_FLAGS=-Dsun.net.http.allowRestrictedHeaders=true  -Djdk.tls.allowUnsafeServerCertChange=true -Dsun.security.ssl.allowUnsafeRenegotiation=true -Dserver.servlet.context-path=<+pipeline.stages.DeployDEV.variables.context_path>
